@@ -10,12 +10,12 @@ ENV WWW_GROUP www-data
 
 RUN apt-get update && apt-get upgrade -y 
 RUN apt-get install -y wget libfreetype6-dev libxml2-dev libjpeg62-turbo-dev libpng-dev libmcrypt-dev libcurl4-gnutls-dev \
-    libssl-dev libc-client2007e-dev libkrb5-dev unzip cron re2c python tree memcached exif libldap2-dev imagemagick 
+    libssl-dev libc-client2007e-dev libkrb5-dev unzip cron re2c python tree memcached exif libldap2-dev imagemagick nano
 
 RUN docker-php-ext-configure imap --with-imap-ssl --with-kerberos && \
     docker-php-ext-configure intl && \
     docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ && \
-    docker-php-ext-install ldap exif soap curl gd zip mbstring imap mysqli pdo pdo_mysql gd iconv opcache intl bcmath && \
+    docker-php-ext-install ldap exif soap curl gd zip mbstring imap mysqli pdo pdo_mysql gd iconv opcache intl bcmath imagick && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /tmp
@@ -40,6 +40,8 @@ ADD php.ini /usr/local/etc/php/php.ini
 ADD init.sh /usr/local/bin/init.sh
 
 RUN chmod u+x /usr/local/bin/init.sh
+
+RUN chmod 755 /var/www/html/cron
 
 ADD crons.conf /root/crons.conf
 RUN crontab /root/crons.conf
