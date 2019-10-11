@@ -15,7 +15,7 @@ RUN apt-get install -y wget libfreetype6-dev libxml2-dev libjpeg62-turbo-dev lib
 RUN docker-php-ext-configure imap --with-imap-ssl --with-kerberos && \
     docker-php-ext-configure intl && \
     docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ && \
-    docker-php-ext-install ldap exif soap curl gd zip mbstring imap mysqli pdo pdo_mysql gd iconv opcache intl bcmath imagick && \
+    docker-php-ext-install ldap exif soap curl gd zip mbstring imap mysqli pdo pdo_mysql gd iconv opcache intl bcmath && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /tmp
